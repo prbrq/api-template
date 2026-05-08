@@ -1,4 +1,4 @@
-import { User } from 'src/users/domain/entities/user.entity';
+import { User } from '../../domain/entities/user.entity';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { UserRepository } from '../../application/ports/user.repository';
 import { PrismaUserMapper } from '../mappers/prisma-user.mapper';
