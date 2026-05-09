@@ -36,7 +36,7 @@ async function main() {
       },
     });
 
-    console.log(`Seed user read: ${user.email}`);
+    console.log(`Seed user ready: ${user.email}`);
   } finally {
     await prisma.$disconnect();
     await pool.end();
