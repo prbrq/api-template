@@ -8,6 +8,8 @@ import { TOKEN_SERVICE } from './application/ports/token.service';
 import { BcryptPasswordHasher } from './infrastructure/services/bcrypt-password-hasher';
 import { AuthController } from './presentation/auth.controller';
 import { JwtTokenService } from './infrastructure/services/jwt-token.service';
+import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
+import { GetCurrentUserUseCase } from './application/use-cases/get-current-user.use-case';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { JwtTokenService } from './infrastructure/services/jwt-token.service';
   controllers: [AuthController],
   providers: [
     LoginUseCase,
+    GetCurrentUserUseCase,
+    JwtStrategy,
     {
       provide: PASSWORD_HASHER,
       useClass: BcryptPasswordHasher,
