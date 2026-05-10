@@ -15,7 +15,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-@ApiTags('auth')
+@ApiTags('Аутентификация')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -24,15 +24,15 @@ export class AuthController {
   ) {}
 
   @ApiOperation({
-    summary: 'Login with email and password',
+    summary: 'Войти по email и паролю',
   })
   @ApiResponse({
     status: 201,
-    description: 'Access token returned',
+    description: 'Access token успешно выдан',
     type: LoginResponseDto,
   })
   @ApiUnauthorizedResponse({
-    description: 'Invalid credentials',
+    description: 'Неверный email или пароль',
   })
   @Post('login')
   login(@Body() dto: LoginRequestDto): Promise<LoginResponseDto> {
@@ -44,15 +44,15 @@ export class AuthController {
 
   @ApiBearerAuth()
   @ApiOperation({
-    summary: 'Get current authenticated user',
+    summary: 'Получить текущего пользователя',
   })
   @ApiResponse({
     status: 200,
-    description: 'Current user returned',
+    description: 'Текущий пользователь успешно получен',
     type: CurrentUserResponseDto,
   })
   @ApiUnauthorizedResponse({
-    description: 'Missing or invalid access token',
+    description: 'Access token отсутствует или недействителен',
   })
   @UseGuards(JwtAuthGuard)
   @Get('me')

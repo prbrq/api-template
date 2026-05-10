@@ -1,98 +1,272 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# API Template
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Минимальный шаблон backend API на NestJS.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Проект предназначен не как готовый продукт, а как стартовая точка для будущих backend-систем. Его можно копировать, форкать или использовать как базу для нового сервиса, где уже нужны PostgreSQL, Prisma, JWT-аутентификация, Swagger и простая модульная архитектура.
 
-## Description
+## Что Входит В Шаблон
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- NestJS;
+- модульный монолит;
+- практичная Clean Architecture внутри бизнес-модулей;
+- PostgreSQL;
+- Prisma 7;
+- JWT access token authentication;
+- seed-пользователь для локальной разработки;
+- Swagger UI на `/docs`;
+- API prefix `/api/v1`;
+- простой health endpoint;
+- минимальные e2e-тесты auth flow;
+- Docker Compose только для PostgreSQL.
 
-## Project setup
+## Что Не Входит В v1
 
-```bash
-$ pnpm install
+Шаблон намеренно оставлен минимальным. В нём нет:
+
+- refresh token;
+- logout;
+- регистрации пользователей;
+- sessions;
+- token rotation;
+- RolesGuard;
+- permissions;
+- audit log;
+- Redis;
+- очередей;
+- работы с файлами;
+- events;
+- микросервисов;
+- сложного healthcheck;
+- единого response wrapper;
+- мультитенантности.
+
+Эти возможности стоит добавлять только тогда, когда они действительно нужны конкретному проекту.
+
+## Endpoint'ы
+
+```text
+GET  /api/v1/health
+POST /api/v1/auth/login
+GET  /api/v1/auth/me
 ```
 
-## Compile and run the project
+Swagger доступен по адресу:
 
-```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+```text
+http://localhost:5000/docs
 ```
 
-## Run tests
+## Требования
+
+- Node.js 22.x или новее;
+- pnpm;
+- Docker и Docker Compose.
+
+## Быстрый Старт
+
+Установить зависимости:
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+pnpm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Создать локальный `.env`:
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+cp .env.example .env
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Запустить PostgreSQL:
 
-## Resources
+```bash
+docker compose up -d
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+Сгенерировать Prisma Client:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+pnpm prisma generate
+```
 
-## Support
+Применить миграции:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+pnpm prisma migrate dev
+```
 
-## Stay in touch
+Создать seed-пользователя:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+pnpm prisma db seed
+```
 
-## License
+Запустить приложение:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```bash
+pnpm start:dev
+```
+
+## Seed-Пользователь
+
+Seed создаёт или обновляет локального администратора:
+
+```text
+email: admin@example.com
+password: admin
+role: ADMIN
+```
+
+Пароль хранится в базе только в виде bcrypt hash.
+
+## Проверка API
+
+Login:
+
+```bash
+curl -X POST http://localhost:5000/api/v1/auth/login \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"admin@example.com","password":"admin"}'
+```
+
+Ответ содержит `accessToken`.
+
+Получить текущего пользователя:
+
+```bash
+curl http://localhost:5000/api/v1/auth/me \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+Healthcheck:
+
+```bash
+curl http://localhost:5000/api/v1/health
+```
+
+## Swagger
+
+Swagger UI доступен на:
+
+```text
+http://localhost:5000/docs
+```
+
+Через Swagger можно:
+
+- выполнить login;
+- получить access token;
+- вставить token через кнопку `Authorize`;
+- вызвать защищённый endpoint `/auth/me`.
+
+## Тесты
+
+Запустить e2e-тесты:
+
+```bash
+pnpm test:e2e
+```
+
+Тесты проверяют:
+
+- login возвращает access token;
+- `/auth/me` с JWT возвращает текущего пользователя;
+- `/auth/me` без JWT возвращает `401 Unauthorized`;
+- `passwordHash` не отдаётся наружу.
+
+Примечание: e2e-тесты используют `NODE_OPTIONS=--experimental-vm-modules`, потому что Jest требует этот флаг для dynamic import внутри Prisma 7 generated client.
+
+## Сборка
+
+Проверить сборку:
+
+```bash
+pnpm build
+```
+
+Запустить production build:
+
+```bash
+pnpm start:prod
+```
+
+## Как Использовать Как Шаблон
+
+Рекомендуемый сценарий:
+
+1. Скопировать или форкнуть репозиторий.
+2. Переименовать проект в `package.json`.
+3. При необходимости изменить имя базы и контейнера в `docker-compose.yml`.
+4. Обновить `.env.example`.
+5. Оставить `health`, `auth`, `users` и `prisma` как базовую инфраструктуру.
+6. Добавлять новые бизнес-модули в `src/<module-name>`.
+
+Рекомендуемая структура нового бизнес-модуля:
+
+```text
+src/example/
+  domain/
+  application/
+  infrastructure/
+  presentation/
+  example.module.ts
+```
+
+Правила архитектуры в этом шаблоне:
+
+- `domain` не зависит от NestJS, Prisma и HTTP;
+- `application` содержит use cases, ports и interfaces;
+- `infrastructure` содержит Prisma repositories и технические реализации;
+- `presentation` содержит controllers, decorators и HTTP DTO;
+- controllers не содержат бизнес-логику;
+- Prisma используется только в infrastructure-слое;
+- `AuthModule` не обращается к Prisma напрямую, а работает с пользователями через `UsersModule`.
+
+## Переменные Окружения
+
+Минимальный `.env`:
+
+```env
+NODE_ENV=development
+PORT=5000
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/api_template?schema=public
+JWT_SECRET=change-me
+JWT_EXPIRES_IN=15m
+```
+
+Для реальных проектов нужно заменить `JWT_SECRET` на длинную случайную строку.
+
+## Prisma
+
+Проект использует Prisma 7 и сгенерированный клиент в папке:
+
+```text
+generated/prisma
+```
+
+Эта папка не хранится в git. После установки зависимостей нужно выполнить:
+
+```bash
+pnpm prisma generate
+```
+
+В `schema.prisma` используется CommonJS-формат клиента:
+
+```prisma
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+```
+
+## Полезные Команды
+
+```bash
+pnpm build
+pnpm start:dev
+pnpm prisma generate
+pnpm prisma migrate dev
+pnpm prisma db seed
+pnpm test:e2e
+pnpm lint
+```
