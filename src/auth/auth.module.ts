@@ -6,6 +6,7 @@ import { LoginUseCase } from './application/use-cases/login.use-case';
 import { PASSWORD_HASHER } from './application/ports/password-hasher';
 import { TOKEN_SERVICE } from './application/ports/token.service';
 import { BcryptPasswordHasher } from './infrastructure/services/bcrypt-password-hasher';
+import { AuthController } from './presentation/auth.controller';
 import { JwtTokenService } from './infrastructure/services/jwt-token.service';
 
 @Module({
@@ -22,6 +23,7 @@ import { JwtTokenService } from './infrastructure/services/jwt-token.service';
       }),
     }),
   ],
+  controllers: [AuthController],
   providers: [
     LoginUseCase,
     {
